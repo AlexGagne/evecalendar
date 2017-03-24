@@ -13,7 +13,8 @@ To build, you need to install stack. You may have to do some setup with stack be
 stack build
 stack exec evecalendar
 `
-Those commands will update stack and download any missing libraries. Then, it will execute the server on port 8000.
+
+Those commands will update stack and download any missing libraries. Then, it will execute the server on port 8000. You need to add your eve online key id in your environment variables as KEY_ID and the verification code as V_CODE.
 
 ## Launch on Heroku
 
