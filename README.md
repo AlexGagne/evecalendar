@@ -13,7 +13,7 @@ To build, you need to install stack. You may have to do some setup with stack be
 stack build
 stack exec evecalendar
 `
-`stack build` will update stack and download any missing libraries. and `stack exec evecalendar` will execute the server. By default, it will listen on port 8000.
+Those commands will update stack and download any missing libraries. Then, it will execute the server on port 8000.
 
 ## Launch on Heroku
 
