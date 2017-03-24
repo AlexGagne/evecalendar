@@ -26,6 +26,7 @@ TBD
 
 ## TODO
 - Minor refactoring (more code reuse, separate xml into another file, only include what is necessary)
+- Add Haddock documentation
 - Implement unit tests.
 - Deal with cache timers
 - Export the data to Google Calendar
