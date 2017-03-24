@@ -7,10 +7,18 @@ module EveCalendar
 
 import           Control.Monad                  (msum)
 import           Data.Data
+import           Data.Text                      (unpack)
 import           Happstack.Server               (ok, dirs, nullConf, seeOther)
 import qualified Happstack.Server                as Happ
 import           System.Console.CmdArgs.Implicit ((&=))
 import qualified System.Console.CmdArgs.Implicit as I
+
+import EveAPI                                    (getUpcomingCalendarEvents)
+
+startServer = do
+  calendarEvents <- getUpcomingCalendarEvents
+  putStrLn $ show calendarEvents
+  {-
 
 startServer :: IO ()
 startServer =  do
@@ -21,7 +29,8 @@ routes :: Happ.ServerPartT IO String
 routes = msum [ dirs "evecalendar" $ transferEveCalendar]
 
 transferEveCalendar :: Happ.ServerPartT IO String
-transferEveCalendar = ok "Done transfering Eve Online calendar to Google Calendar"
+transferEveCalendar = ok "hello"
+
 
 
 -- Config
@@ -43,3 +52,4 @@ aConfig =
          }
     &= I.summary "EveCalendar server"
     &= I.program "server"
+    -}
