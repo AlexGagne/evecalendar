@@ -1,5 +1,4 @@
-{-# LANGUAGE DeriveDataTypeable #-}
-{-# LANGUAGE RecordWildCards    #-}
+{-# LANGUAGE DisambiguateRecordFields #-}
 
 module EveCalendar
     ( startServer
@@ -17,7 +16,7 @@ import EveAPI                                    (getUpcomingCalendarEvents)
 
 startServer = do
   calendarEvents <- getUpcomingCalendarEvents
-  putStrLn $ show calendarEvents
+  print calendarEvents
   {-
 
 startServer :: IO ()

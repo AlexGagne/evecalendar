@@ -8,7 +8,7 @@ import Control.Lens                 ((.~),(^.), (&))
 import Data.ByteString.Lazy         (toStrict)
 import Data.Time                    (UTCTime)
 import Data.Time.Format             (parseTimeOrError, defaultTimeLocale)
-import Data.Maybe                   (fromJust, isJust)
+import Data.Maybe                   (fromJust, isJust, fromMaybe)
 import Data.Text                    (Text, unpack, pack)
 import Data.Text.Encoding           (decodeUtf8)
 import Network.Wreq                 (param, getWith, defaults, responseBody)
@@ -56,8 +56,8 @@ getEveAPIRequest path option = do
                                                        & param "vCode" .~ [vCode]
                                    Just option -> defaults & param "keyID" .~ [keyID]
                                                            & param "vCode" .~ [vCode]
-                                                           & param (parameter option) .~ [(value option)]
-  response <- getWith authOptions (eveBaseUrl ++ (unpack path))
+                                                           & param (parameter option) .~ [value option]
+  response <- getWith authOptions (eveBaseUrl ++ unpack path)
   return $ decodeUtf8 . toStrict $ response ^. responseBody
   where eveBaseUrl = "https://api.eveonline.com"
 
@@ -94,10 +94,10 @@ calendarEventFromElement element = CalendarEvent eventID ownerID ownerName event
     ownerID = read (fromJust' ((findAttr $ simpleQName "ownerID") element) "ownerID") :: Int
     ownerName = pack $ fromJust' ((findAttr $ simpleQName "ownerName") element) "ownerName"
     dateString = fromJust' ((findAttr $ simpleQName "eventDate") element) "eventDate1"
-    eventDate = (parseTimeOrError True defaultTimeLocale "%Y-%m-%d %H:%M:%S" dateString) :: UTCTime
+    eventDate = parseTimeOrError True defaultTimeLocale "%Y-%m-%d %H:%M:%S" dateString :: UTCTime
     eventTitle = pack $ fromJust $ (findAttr $ simpleQName "eventTitle") element
     duration = read (fromJust $ (findAttr $ simpleQName "duration") element) :: Int
-    importance = if (read (fromJust $ (findAttr $ simpleQName "duration") element) :: Int) == 1 then True else False
+    importance = (read (fromJust $ (findAttr $ simpleQName "duration") element) :: Int) == 1
     responseString = fromJust $ (findAttr $ simpleQName "eventText") element
     response =  case responseString of
                   "Undecided" -> Undecided
@@ -109,9 +109,8 @@ calendarEventFromElement element = CalendarEvent eventID ownerID ownerName event
 
 -- Will throw error err if it is Nothing
 fromJust':: Maybe a -> String -> a
-fromJust' m err = case m of
-    Nothing -> error err
-    Just m -> m
+fromJust' m err = fromMaybe (error err) m
+
 
 data Option = Option
   { parameter :: Text
