@@ -21,7 +21,6 @@ Those commands will update stack and download any missing libraries. Then, it wi
 TBD
 
 ## Currently available
-
 - The calendar data from EVE Online is fetched and the XML is parsed into a Haskell data format.
 
 ## TODO

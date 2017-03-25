@@ -9,7 +9,7 @@ import Data.Time                    (UTCTime)
 import Data.Time.Format             (parseTimeOrError, defaultTimeLocale)
 import Text.XML.Light.Input         (parseXML)
 import Text.XML.Light.Proc          (findElements, onlyElems, findAttr)
-import Text.XML.Light.Types         (Element, QName (QName) )
+import Text.XML.Light.Types         (Content, Element, QName (QName))
 
 import Eve.Utils.Utilities          (fromJust')
 import Eve.Types                    (CalendarEvent(..), Character(..), Response(..))
@@ -26,8 +26,8 @@ xmlToCharacters xml = map characterFromElement characterElements
     xmlDocument = parseXML xml
     characterElements = getRows xmlDocument
 
+getRows :: [Content] -> [Element]
 getRows xmlDocument = concatMap (findElements $ simpleQName "row") (onlyElems xmlDocument)
-
 
 characterFromElement :: Element -> Character
 characterFromElement element = 
