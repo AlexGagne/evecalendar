@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Eve.API
-    (getUpcomingCalendarEvents
+    (getUpcomingCalendarEvents, getCharacters
     ) where
 
 import Control.Lens                 ((.~),(^.), (&))
@@ -17,11 +17,16 @@ import Eve.Utils.XmlReader          (xmlToCalendarEvents, xmlToCharacters)
 
 getUpcomingCalendarEvents :: IO [CalendarEvent]
 getUpcomingCalendarEvents = do
-  eveCharacterXML <- getCharacterXML
+  characters <- getCharacters
   -- We only take the first character's event for now
-  let charID = characterID $ head $ xmlToCharacters eveCharacterXML
+  let charID = characterID $ head characters
   calendarEventXml <- getCalendarXML charID
   return $ xmlToCalendarEvents calendarEventXml
+
+getCharacters :: IO [Character]
+getCharacters = do
+  eveCharacterXML <- getCharacterXML
+  xmlToCharacters eveCharacterXML
 
 getCharacterXML :: IO Text
 getCharacterXML = getEveAPIRequest "/account/Characters.xml.aspx" [] 

@@ -1,6 +1,8 @@
 module Main where
 
-import Eve.Calendar
+import Eve.API (getUpcomingCalendarEvents)
 
 main :: IO ()
-main = startServer
+main = do
+  calendarEvents <- getUpcomingCalendarEvents
+  print calendarEvents
