@@ -5,11 +5,11 @@ module Eve.Utils.XmlReader (xmlToCalendarEvents, xmlToCharacters)
 
 import Data.Maybe                   (fromJust, isJust, fromMaybe)
 import Data.Text                    (Text, pack, unpack)
-import Data.Time (UTCTime)
+import Data.Time                    (UTCTime)
 import Data.Time.Format             (parseTimeOrError, defaultTimeLocale)
-import Text.XML.Light.Input
-import Text.XML.Light.Proc
-import Text.XML.Light.Types
+import Text.XML.Light.Input         (parseXML)
+import Text.XML.Light.Proc          (findElements, onlyElems, findAttr)
+import Text.XML.Light.Types         (Element, QName (QName) )
 
 import Eve.Utils.Utilities          (fromJust')
 import Eve.Types                    (CalendarEvent(..), Character(..), Response(..))

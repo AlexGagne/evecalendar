@@ -25,7 +25,6 @@ TBD
 - The calendar data from EVE Online is fetched and the XML is parsed into a Haskell data format.
 
 ## TODO
-- Minor refactoring (more code reuse, separate xml into another file, only include what is necessary)
 - Add Haddock documentation
 - Implement unit tests.
 - Deal with cache timers

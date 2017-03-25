@@ -5,7 +5,6 @@ module Eve.Calendar
     ) where
 
 import           Control.Monad                  (msum)
-import           Data.Data
 import           Data.Text                      (unpack)
 import           Happstack.Server               (ok, dirs, nullConf, seeOther)
 import qualified Happstack.Server                as Happ

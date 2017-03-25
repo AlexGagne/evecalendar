@@ -9,11 +9,11 @@ import Data.ByteString.Lazy         (toStrict)
 import Data.Text                    (Text, unpack, pack)
 import Data.Text.Encoding           (decodeUtf8)
 import Network.Wreq                 (param, getWith, defaults, responseBody)
-import Network.Wreq.Types                 (params)
+import Network.Wreq.Types           (params)
 import qualified System.Environment as E
 
 import Eve.Types                    (CalendarEvent, Character, characterID)
-import Eve.Utils.XmlReader           (xmlToCalendarEvents, xmlToCharacters)
+import Eve.Utils.XmlReader          (xmlToCalendarEvents, xmlToCharacters)
 
 getUpcomingCalendarEvents :: IO [CalendarEvent]
 getUpcomingCalendarEvents = do
