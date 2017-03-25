@@ -1,6 +1,6 @@
 module Main where
 
-import EveCalendar
+import Eve.Calendar
 
 main :: IO ()
 main = startServer

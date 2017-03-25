@@ -1,6 +1,6 @@
 {-# LANGUAGE DisambiguateRecordFields #-}
 
-module EveCalendar
+module Eve.Calendar
     ( startServer
     ) where
 
@@ -12,7 +12,7 @@ import qualified Happstack.Server                as Happ
 import           System.Console.CmdArgs.Implicit ((&=))
 import qualified System.Console.CmdArgs.Implicit as I
 
-import EveAPI                                    (getUpcomingCalendarEvents)
+import Eve.API                                    (getUpcomingCalendarEvents)
 
 startServer = do
   calendarEvents <- getUpcomingCalendarEvents

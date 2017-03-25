@@ -14,11 +14,10 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     EveCalendar
+  exposed-modules:     Eve.Calendar 
                      , Eve.API
                      , Eve.Types
-  other-modules:
-                       Eve.Types.CalendarEvent
+  other-modules:       Eve.Types.CalendarEvent
                      , Eve.Types.Character
                      , Eve.Utils.XmlReader
                      , Eve.Utils.Utilities 

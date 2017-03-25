@@ -1,4 +1,4 @@
-module Eve.Types.CalendarEvent (CalendarEvent, Response)
+module Eve.Types.CalendarEvent (CalendarEvent(..), Response(..))
 where 
 
 import Data.Text (Text)

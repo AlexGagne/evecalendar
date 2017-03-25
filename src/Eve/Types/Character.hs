@@ -1,4 +1,4 @@
-module Eve.Types.Character (Character)
+module Eve.Types.Character (Character(..))
 where 
 
 import Data.Text (Text)
