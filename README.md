@@ -25,7 +25,6 @@ TBD
 - The calendar data from EVE Online is fetched and the XML is parsed into a Haskell data format.
 
 ## TODO
-- Add Haddock documentation
 - Implement unit tests
 - Deal with cache timers
 - API Key and Verification Code not in an environment variable?
