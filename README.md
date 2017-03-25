@@ -26,7 +26,8 @@ TBD
 
 ## TODO
 - Add Haddock documentation
-- Implement unit tests.
+- Implement unit tests
 - Deal with cache timers
+- API Key and Verification Code not in an environment variable?
 - Export the data to Google Calendar
 - Explore new endpoints for EVE Online too see which would be interesting to use.

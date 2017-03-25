@@ -1,5 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+{-|
+Module      : Eve.API
+Description : The module containing all the function calls to get Eve's XML Api
+Copyright   : (c) Alex Gagné, 2017
+License     : MIT
+
+The module containing all the function calls to get EVE's XML Api.
+You must include your API key and verification code in an Environment Variable.
+-}
 module Eve.API
     (getUpcomingCalendarEvents, getCharacters
     ) where
@@ -15,18 +24,20 @@ import qualified System.Environment as E
 import Eve.Types                    (CalendarEvent, Character, characterID)
 import Eve.Utils.XmlReader          (xmlToCalendarEvents, xmlToCharacters)
 
+-- | Fetches all the calendar events from EVE's XML API
 getUpcomingCalendarEvents :: IO [CalendarEvent]
 getUpcomingCalendarEvents = do
   characters <- getCharacters
-  -- We only take the first character's event for now
+  -- We only take the first character's calendar for now
   let charID = characterID $ head characters
   calendarEventXml <- getCalendarXML charID
   return $ xmlToCalendarEvents calendarEventXml
 
+-- | Fetches all the Characters from EVE's XML API
 getCharacters :: IO [Character]
 getCharacters = do
   eveCharacterXML <- getCharacterXML
-  xmlToCharacters eveCharacterXML
+  return $ xmlToCharacters eveCharacterXML
 
 getCharacterXML :: IO Text
 getCharacterXML = getEveAPIRequest "/account/Characters.xml.aspx" [] 
@@ -34,7 +45,6 @@ getCharacterXML = getEveAPIRequest "/account/Characters.xml.aspx" []
 getCalendarXML :: Int -> IO Text
 getCalendarXML charID = getEveAPIRequest "/char/UpcomingCalendarEvents.xml.aspx" [("characterID", pack (show charID))] 
 
--- TODO: Deal with errors
 getEveAPIRequest :: Text ->  [(Text, Text)] -> IO Text
 getEveAPIRequest path options = do
   keyID <- getKeyID
@@ -54,9 +64,3 @@ getVCode :: IO Text
 getVCode = do
   vCode <- E.getEnv "V_CODE"
   return $ pack vCode
-
-
-data Option = Option
-  { parameter :: Text
-  , value :: Text
-  }

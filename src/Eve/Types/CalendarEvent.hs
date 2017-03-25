@@ -4,7 +4,7 @@ where
 import Data.Text (Text)
 import Data.Time (UTCTime)
 
-
+-- | 'CalendarEvent' represents the Calendar data from EVE's XML API.
 data CalendarEvent = CalendarEvent
   { eventID :: Int
   , ownerID :: Int
@@ -17,4 +17,5 @@ data CalendarEvent = CalendarEvent
   , eventText :: Text
   } deriving Show
 
+-- | 'Response' represents the different states a response to a calendar event can be.
 data Response = Undecided | Accepted | Declined | Tentative deriving Show
