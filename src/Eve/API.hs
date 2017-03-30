@@ -22,20 +22,17 @@ import Network.Wreq.Types           (params)
 import qualified System.Environment as E
 import Data.Functor.Identity
 
-import Eve.Types                    (CalendarEvent, Character, characterID)
+import Eve.Types                    (CalendarEvents, Characters, Character, characterID)
 import Eve.Internal.Utils.XmlReader (xmlToCalendarEvents, xmlToCharacters, getCacheTimerFromXml)
 
 -- | Fetches all the calendar events from EVE's XML API
-getUpcomingCalendarEvents :: IO [CalendarEvent]
-getUpcomingCalendarEvents = do
-  characters <- getCharacters
-  -- We only take the first character's calendar for now
-  let charID = characterID $ head characters
-  calendarEventXml <- getCalendarXML charID
+getUpcomingCalendarEvents :: Character -> IO CalendarEvents
+getUpcomingCalendarEvents character = do
+  calendarEventXml <- getCalendarXML $ characterID character
   return $ xmlToCalendarEvents calendarEventXml
 
 -- | Fetches all the Characters from EVE's XML API
-getCharacters :: IO [Character]
+getCharacters :: IO Characters
 getCharacters = do
   eveCharacterXML <- getCharacterXML
   return $ xmlToCharacters eveCharacterXML

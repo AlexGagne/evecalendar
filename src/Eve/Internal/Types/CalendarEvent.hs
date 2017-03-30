@@ -1,7 +1,18 @@
-module Eve.Internal.Types.CalendarEvent (CalendarEvent(..), Response(..)) where
+{-# LANGUAGE MultiParamTypeClasses  #-}
 
-import Data.Text (Text)
-import Data.Time (UTCTime)
+module Eve.Internal.Types.CalendarEvent (CalendarEvents(..), CalendarEvent(..), Response(..)) where
+
+import Data.Text                      (Text)
+import Data.Time                      (UTCTime)
+import Eve.Internal.Types.CachedUntil (CachedUntil, cachedUntil)
+
+-- | 'CalendarEvents' represents all the calendar events with the cached timer
+data CalendarEvents = CalendarEvents
+  { calendarEvents :: [CalendarEvent]
+  , _calendarCachedUntil :: UTCTime
+  } deriving Show
+
+instance CachedUntil CalendarEvents UTCTime where cachedUntil = _calendarCachedUntil
 
 
 -- | 'CalendarEvent' represents the Calendar data from EVE's XML API.

@@ -11,16 +11,28 @@ import Text.XML.Light.Proc          (findElements, onlyElems, findAttr, strConte
 import Text.XML.Light.Types         (Content, Element, QName (QName), elContent)
 
 import Eve.Internal.Utils.Utilities (fromJust', textToUTCTime)
-import Eve.Types                    (CalendarEvent(..), Character(..), Response(..))
+import Eve.Types                    (CalendarEvents(..), CalendarEvent(..), Response(..), Characters(..), Character(..))
 
-xmlToCalendarEvents :: Text -> [CalendarEvent]
-xmlToCalendarEvents xml = map calendarEventFromElement calendarElements
+xmlToCalendarEvents :: Text -> CalendarEvents
+xmlToCalendarEvents xml = CalendarEvents calendarEvents cacheTimer
+  where
+    calendarEvents = xmlToCalendarEventArray xml
+    cacheTimer = getCacheTimerFromXml xml
+
+xmlToCharacters :: Text -> Characters
+xmlToCharacters xml = Characters characters cacheTimer
+  where
+    characters = xmlToCharacterArray xml
+    cacheTimer = getCacheTimerFromXml xml
+
+xmlToCalendarEventArray :: Text -> [CalendarEvent]
+xmlToCalendarEventArray xml = map calendarEventFromElement calendarElements
   where
     xmlDocument = parseXML xml
     calendarElements = concatMap (findElements $ simpleQName "row") (onlyElems xmlDocument)
 
-xmlToCharacters :: Text -> [Character]
-xmlToCharacters xml = map characterFromElement characterElements
+xmlToCharacterArray :: Text -> [Character]
+xmlToCharacterArray xml = map characterFromElement characterElements
   where
     xmlDocument = parseXML xml
     characterElements = getRows xmlDocument

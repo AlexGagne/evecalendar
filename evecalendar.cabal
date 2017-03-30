@@ -18,8 +18,10 @@ library
                      , Eve.Types
   other-modules:       Eve.Internal.Types.CalendarEvent
                      , Eve.Internal.Types.Character
+                     , Eve.Internal.Types.CachedUntil
                      , Eve.Internal.Utils.XmlReader
                      , Eve.Internal.Utils.Utilities 
+
   build-depends:       base >= 4.7 && < 5
                      , happstack-server
                      , cmdargs
