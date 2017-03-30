@@ -14,17 +14,13 @@ stack build
 stack exec evecalendar
 ```
 
-Those commands will update stack and download any missing libraries. Then, it will execute the server on port 8000. You need to add your eve online key id in your environment variables as KEY_ID and the verification code as V_CODE.
-
-## Launch on Heroku
-
-TBD
+Those commands will update stack and download any missing libraries. Then, it will execute the server on port 8000. You need to add your eve online key id in your environment variables as KEY_ID and the verification code as V_CODE. A better way to pass in KEY_ID and V_CODE will eventually be implemented.
 
 ## Currently available
 - The calendar data from EVE Online is fetched and the XML is parsed into a Haskell data format.
 
 ## TODO
-- Implement unit tests
+- Implement unit tests (I'm having a hard time unit testing the IO functions, help would be appreciated)
 - Deal with cache timers
 - API Key and Verification Code not in an environment variable?
 - Export the data to Google Calendar

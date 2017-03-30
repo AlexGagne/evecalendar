@@ -1,8 +1,8 @@
-module Eve.Types.CalendarEvent (CalendarEvent(..), Response(..))
-where 
+module Eve.Internal.Types.CalendarEvent (CalendarEvent(..), Response(..)) where
 
 import Data.Text (Text)
 import Data.Time (UTCTime)
+
 
 -- | 'CalendarEvent' represents the Calendar data from EVE's XML API.
 data CalendarEvent = CalendarEvent

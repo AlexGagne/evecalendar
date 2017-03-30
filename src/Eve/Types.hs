@@ -6,7 +6,8 @@ License     : MIT
 
 The module containing all data formats and types used in the EVE XML API.
 -}
-module Eve.Types (module Eve.Types.CalendarEvent, module Eve.Types.Character) where
+module Eve.Types (module Types) 
+where
 
-import Eve.Types.CalendarEvent
-import Eve.Types.Character
+import Eve.Internal.Types.CalendarEvent as Types
+import Eve.Internal.Types.Character as Types

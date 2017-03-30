@@ -20,9 +20,10 @@ import Data.Text.Encoding           (decodeUtf8)
 import Network.Wreq                 (param, getWith, defaults, responseBody)
 import Network.Wreq.Types           (params)
 import qualified System.Environment as E
+import Data.Functor.Identity
 
 import Eve.Types                    (CalendarEvent, Character, characterID)
-import Eve.Utils.XmlReader          (xmlToCalendarEvents, xmlToCharacters)
+import Eve.Internal.Utils.XmlReader (xmlToCalendarEvents, xmlToCharacters, getCacheTimerFromXml)
 
 -- | Fetches all the calendar events from EVE's XML API
 getUpcomingCalendarEvents :: IO [CalendarEvent]
@@ -40,7 +41,7 @@ getCharacters = do
   return $ xmlToCharacters eveCharacterXML
 
 getCharacterXML :: IO Text
-getCharacterXML = getEveAPIRequest "/account/Characters.xml.aspx" [] 
+getCharacterXML = getEveAPIRequest "/account/Characters.xml.aspx" []
 
 getCalendarXML :: Int -> IO Text
 getCalendarXML charID = getEveAPIRequest "/char/UpcomingCalendarEvents.xml.aspx" [("characterID", pack (show charID))] 

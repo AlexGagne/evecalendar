@@ -1,7 +1,7 @@
-module Eve.Types.Character (Character(..))
+module Eve.Internal.Types.Character (Character(..))
 where 
 
-import Data.Text (Text)
+import Data.Text                    (Text)
 
 -- | 'Character' represents the Character data from EVE's XML API.
 data Character = Character

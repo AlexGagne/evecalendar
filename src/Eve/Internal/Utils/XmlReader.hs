@@ -1,30 +1,35 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Eve.Utils.XmlReader (xmlToCalendarEvents, xmlToCharacters) 
+module Eve.Internal.Utils.XmlReader (xmlToCalendarEvents, xmlToCharacters, getCacheTimerFromXml) 
     where
 
 import Data.Maybe                   (fromJust, isJust, fromMaybe)
 import Data.Text                    (Text, pack, unpack)
 import Data.Time                    (UTCTime)
-import Data.Time.Format             (parseTimeOrError, defaultTimeLocale)
 import Text.XML.Light.Input         (parseXML)
-import Text.XML.Light.Proc          (findElements, onlyElems, findAttr)
-import Text.XML.Light.Types         (Content, Element, QName (QName))
+import Text.XML.Light.Proc          (findElements, onlyElems, findAttr, strContent)
+import Text.XML.Light.Types         (Content, Element, QName (QName), elContent)
 
-import Eve.Utils.Utilities          (fromJust')
+import Eve.Internal.Utils.Utilities (fromJust', textToUTCTime)
 import Eve.Types                    (CalendarEvent(..), Character(..), Response(..))
 
 xmlToCalendarEvents :: Text -> [CalendarEvent]
-xmlToCalendarEvents xml = map calendarEventFromElement characterElements
+xmlToCalendarEvents xml = map calendarEventFromElement calendarElements
   where
     xmlDocument = parseXML xml
-    characterElements = concatMap (findElements $ simpleQName "row") (onlyElems xmlDocument)
+    calendarElements = concatMap (findElements $ simpleQName "row") (onlyElems xmlDocument)
 
 xmlToCharacters :: Text -> [Character]
 xmlToCharacters xml = map characterFromElement characterElements
   where
     xmlDocument = parseXML xml
     characterElements = getRows xmlDocument
+
+getCacheTimerFromXml :: Text -> UTCTime
+getCacheTimerFromXml xml = textToUTCTime $ pack cachedUntil
+  where 
+    xmlDocument = parseXML xml
+    cachedUntil = strContent $ head $ concatMap (findElements $ simpleQName "cachedUntil") (onlyElems xmlDocument)
 
 getRows :: [Content] -> [Element]
 getRows xmlDocument = concatMap (findElements $ simpleQName "row") (onlyElems xmlDocument)
@@ -73,8 +78,8 @@ getBoolFromElement :: Text -> Element -> Bool
 getBoolFromElement name element = getIntFromElement name element == 1
 
 getUTCTimeFromElement :: Text -> Element -> UTCTime
-getUTCTimeFromElement name element = let dateString = getStringFromElement name element in
-  parseTimeOrError True defaultTimeLocale "%Y-%m-%d %H:%M:%S" dateString :: UTCTime
+getUTCTimeFromElement name element = textToUTCTime dateString where
+  dateString = pack $ getStringFromElement name element
 
 getIntFromElement :: Text -> Element -> Int
 getIntFromElement name element = read (getStringFromElement name element) :: Int
