@@ -1,6 +1,10 @@
 module Main where
 
-import EveCalendar
+import Eve.API (getCharacters, getUpcomingCalendarEvents)
+import Eve.Types (characters)
 
 main :: IO ()
-main = startServer
+main = do
+  charactersFromAPI <- getCharacters
+  calendarEvents <- getUpcomingCalendarEvents $ head $ characters charactersFromAPI
+  print calendarEvents

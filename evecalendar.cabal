@@ -14,9 +14,14 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     EveCalendar
-  other-modules:
-                       EveAPI
+  exposed-modules:     Eve.API
+                     , Eve.Types
+  other-modules:       Eve.Internal.Types.CalendarEvent
+                     , Eve.Internal.Types.Character
+                     , Eve.Internal.Types.CachedUntil
+                     , Eve.Internal.Utils.XmlReader
+                     , Eve.Internal.Utils.Utilities 
+
   build-depends:       base >= 4.7 && < 5
                      , happstack-server
                      , cmdargs
@@ -43,6 +48,8 @@ test-suite evecalendar-test
   main-is:             Spec.hs
   build-depends:       base
                      , evecalendar
+                     , tasty
+                     , tasty-quickcheck
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
