@@ -11,3 +11,4 @@ where
 
 import Eve.Internal.Types.CalendarEvent as Types
 import Eve.Internal.Types.Character as Types
+import Eve.Internal.Types.CachedUntil as Types
