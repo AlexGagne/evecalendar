@@ -7,7 +7,7 @@ Copyright   : (c) Alex Gagné, 2017
 License     : MIT
 Stability   : experimental
 
-This module contains all the utility functions to read xml from a 'Text' and export it into the various data types used by the library
+This module contains all the utility functions to read xml from a Text and export it into the various data types used by the library
 
 -}
 
