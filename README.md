@@ -2,7 +2,7 @@
 # EveCalendar
 An Haskell app to download calendar data from EVE Online and upload it to Google Calendar, but also leave room for expansion if I ever want to leverage more of Eve Online's API. The src folder contains the EVE Online library that fetches from EVE Online and the app folder contains the application that will pull data and send it to Google Calendar.
 
-[![Travis](https://img.shields.io/travis/alexgagne/evecalendar.svg)]()
+[![Travis](https://img.shields.io/travis/alexgagne/evecalendar.svg?branch=master)]()
 [![license](https://img.shields.io/github/license/alexgagne/evecalendar.svg)]()
 
 ## Building on a local machine
