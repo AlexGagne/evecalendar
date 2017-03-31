@@ -5,10 +5,11 @@ Module      : Eve.API
 Description : The module containing all the function calls to get Eve's XML Api
 Copyright   : (c) Alex Gagné, 2017
 License     : MIT
+Stability   : experimental
 
 The module containing all the function calls to get EVE's XML Api.
-You must include your API key and verification code in an Environment Variable.
 -}
+
 module Eve.API
     (getUpcomingCalendarEvents, getCharacters
     ) where
@@ -22,7 +23,7 @@ import Network.Wreq.Types           (params)
 import Data.Functor.Identity
 
 import Eve.Types                    (CalendarEvents, Credentials(..), Characters, Character, characterID)
-import Eve.Internal.Utils.XmlReader (xmlToCalendarEvents, xmlToCharacters, getCacheTimerFromXml)
+import Eve.Internal.Utils.XmlReader (xmlToCalendarEvents, xmlToCharacters)
 
 -- | Fetches all the calendar events from EVE's XML API
 getUpcomingCalendarEvents :: Credentials -> Character -> IO CalendarEvents

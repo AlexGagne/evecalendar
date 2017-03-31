@@ -1,3 +1,11 @@
+{-|
+Module      : Eve.Internal.Types.Credentials
+Description : The module contains the data and related functions to the Credentials
+Copyright   : (c) Alex Gagné, 2017
+License     : MIT
+Stability   : experimental
+-}
+
 module Eve.Internal.Types.Credentials (Credentials(..))
 where 
 

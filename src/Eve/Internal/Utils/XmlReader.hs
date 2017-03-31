@@ -1,6 +1,17 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Eve.Internal.Utils.XmlReader (xmlToCalendarEvents, xmlToCharacters, getCacheTimerFromXml) 
+{-|
+Module      : Eve.Internal.Utils.XmlReader
+Description : The module contains all the utility functions to process xml
+Copyright   : (c) Alex Gagné, 2017
+License     : MIT
+Stability   : experimental
+
+This module contains all the utility functions to read xml from a 'Text' and export it into the various data types used by the library
+
+-}
+
+module Eve.Internal.Utils.XmlReader (xmlToCalendarEvents, xmlToCharacters) 
     where
 
 import Data.Maybe                   (fromJust, isJust, fromMaybe)
@@ -13,12 +24,18 @@ import Text.XML.Light.Types         (Content, Element, QName (QName), elContent)
 import Eve.Internal.Utils.Utilities (fromJust', textToUTCTime)
 import Eve.Types                    (CalendarEvents(..), CalendarEvent(..), Response(..), Characters(..), Character(..))
 
+{- | Transforms an XML string into a CalendarEvents. Assumes that the XML string
+     is the usual format returned by EVE Online's XML API
+-}
 xmlToCalendarEvents :: Text -> CalendarEvents
 xmlToCalendarEvents xml = CalendarEvents calendarEvents cacheTimer
   where
     calendarEvents = xmlToCalendarEventArray xml
     cacheTimer = getCacheTimerFromXml xml
 
+{- | Transforms an XML string into a Characters. Assumes that the XML string
+     is the usual format returned by EVE Online's XML API
+-}
 xmlToCharacters :: Text -> Characters
 xmlToCharacters xml = Characters characters cacheTimer
   where

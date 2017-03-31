@@ -1,5 +1,13 @@
 {-# LANGUAGE MultiParamTypeClasses  #-}
 
+{-|
+Module      : Eve.Internal.Types.CalendarEvent
+Description : The module contains the data and related functions to the CalendarEvents
+Copyright   : (c) Alex Gagné, 2017
+License     : MIT
+Stability   : experimental
+-}
+
 module Eve.Internal.Types.CalendarEvent (CalendarEvents(..), CalendarEvent(..), Response(..)) where
 
 import Data.Text                      (Text)
@@ -12,8 +20,8 @@ data CalendarEvents = CalendarEvents
   , _calendarCachedUntil :: UTCTime
   } deriving Show
 
+-- | 'cachedUntil' will fetch the cache timer on the calendar events
 instance CachedUntil CalendarEvents UTCTime where cachedUntil = _calendarCachedUntil
-
 
 -- | 'CalendarEvent' represents the Calendar data from EVE's XML API.
 data CalendarEvent = CalendarEvent
@@ -22,7 +30,8 @@ data CalendarEvent = CalendarEvent
   , ownerName :: Text
   , eventDate :: UTCTime -- format: 2017-03-26 00:00:00
   , eventTitle :: Text
-  , duration :: Int --duration is in minutes
+   -- | 'duration' is in minutes
+  , duration :: Int
   , importance :: Bool
   , response :: Response
   , eventText :: Text
