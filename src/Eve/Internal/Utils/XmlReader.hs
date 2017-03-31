@@ -102,7 +102,7 @@ getResponseFromElement name element =
   where
     responseString = getStringFromElement name element
 
--- We assume here that 1 = True and 0 = False in the element
+-- We assume here that 1 = True and 0 = False in the element, from Eve Online's XML API
 getBoolFromElement :: Text -> Element -> Bool
 getBoolFromElement name element = getIntFromElement name element == 1
 
