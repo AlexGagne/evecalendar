@@ -21,6 +21,5 @@ Those commands will update stack and download any missing libraries. Then, it wi
 
 ## TODO
 - Implement unit tests (I'm having a hard time unit testing the IO functions, help would be appreciated)
-- API Key and Verification Code not in an environment variable?
 - Export the data to Google Calendar
 - Explore new endpoints for EVE Online too see which would be interesting to use.
