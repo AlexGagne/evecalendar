@@ -19,46 +19,35 @@ import Data.Text                    (Text, unpack, pack)
 import Data.Text.Encoding           (decodeUtf8)
 import Network.Wreq                 (param, getWith, defaults, responseBody)
 import Network.Wreq.Types           (params)
-import qualified System.Environment as E
 import Data.Functor.Identity
 
-import Eve.Types                    (CalendarEvents, Characters, Character, characterID)
+import Eve.Types                    (CalendarEvents, Credentials(..), Characters, Character, characterID)
 import Eve.Internal.Utils.XmlReader (xmlToCalendarEvents, xmlToCharacters, getCacheTimerFromXml)
 
 -- | Fetches all the calendar events from EVE's XML API
-getUpcomingCalendarEvents :: Character -> IO CalendarEvents
-getUpcomingCalendarEvents character = do
-  calendarEventXml <- getCalendarXML $ characterID character
+getUpcomingCalendarEvents :: Credentials -> Character -> IO CalendarEvents
+getUpcomingCalendarEvents credentials character = do
+  calendarEventXml <- getCalendarXML credentials $ characterID character
   return $ xmlToCalendarEvents calendarEventXml
 
 -- | Fetches all the Characters from EVE's XML API
-getCharacters :: IO Characters
-getCharacters = do
-  eveCharacterXML <- getCharacterXML
+getCharacters :: Credentials -> IO Characters
+getCharacters credentials = do
+  eveCharacterXML <- getCharacterXML credentials
   return $ xmlToCharacters eveCharacterXML
 
-getCharacterXML :: IO Text
-getCharacterXML = getEveAPIRequest "/account/Characters.xml.aspx" []
+getCharacterXML :: Credentials -> IO Text
+getCharacterXML credentials = getEveAPIRequest credentials "/account/Characters.xml.aspx" []
 
-getCalendarXML :: Int -> IO Text
-getCalendarXML charID = getEveAPIRequest "/char/UpcomingCalendarEvents.xml.aspx" [("characterID", pack (show charID))] 
+getCalendarXML :: Credentials -> Int -> IO Text
+getCalendarXML credentials charID = getEveAPIRequest credentials "/char/UpcomingCalendarEvents.xml.aspx" [("characterID", pack (show charID))] 
 
-getEveAPIRequest :: Text ->  [(Text, Text)] -> IO Text
-getEveAPIRequest path options = do
-  keyID <- getKeyID
-  vCode <- getVCode
-  let authOptions = defaults {params = [("keyId", keyID), ("vCode", vCode)] ++ options} 
+getEveAPIRequest :: Credentials -> Text ->  [(Text, Text)] -> IO Text
+getEveAPIRequest credentials path options = do
+  let authOptions = defaults {params = [("keyId", keyID), ("vCode", verifCode)] ++ options} 
   response <- getWith authOptions (eveBaseUrl ++ unpack path)
   return $ decodeUtf8 . toStrict $ response ^. responseBody
   where 
     eveBaseUrl = "https://api.eveonline.com"
-
-getKeyID :: IO Text
-getKeyID = do
-  keyID <- E.getEnv "KEY_ID"
-  return $ pack keyID
-
-getVCode :: IO Text
-getVCode = do
-  vCode <- E.getEnv "V_CODE"
-  return $ pack vCode
+    keyID = keyId credentials
+    verifCode = vCode credentials

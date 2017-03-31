@@ -18,6 +18,7 @@ library
                      , Eve.Types
   other-modules:       Eve.Internal.Types.CalendarEvent
                      , Eve.Internal.Types.Character
+                     , Eve.Internal.Types.Credentials
                      , Eve.Internal.Types.CachedUntil
                      , Eve.Internal.Utils.XmlReader
                      , Eve.Internal.Utils.Utilities 
@@ -40,6 +41,8 @@ executable evecalendar
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , evecalendar
+                     , text
+                     , transformers
   default-language:    Haskell2010
 
 test-suite evecalendar-test
